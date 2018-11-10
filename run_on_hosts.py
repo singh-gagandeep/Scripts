@@ -3,8 +3,9 @@
 
 import os
 import sys
-import json
+import json # json parsing
 
+# paramiko module to talk to ssh
 from paramiko.client import SSHClient
 from paramiko.client import AutoAddPolicy
 from paramiko.ssh_exception import SSHException
@@ -12,6 +13,10 @@ from paramiko.ssh_exception import SSHException
 SERVERS = None
 
 def load_config(config_file="~/.servers_config"):
+    """
+        load the configuration file and execute specified commands
+        on respective servers
+    """
     global SERVERS
     config_file = os.path.expanduser(config_file)
     try:
@@ -24,6 +29,11 @@ def load_config(config_file="~/.servers_config"):
 load_config()
 
 def run_commands_on_servers():
+    """
+       this function will create an instance of ssh client and run
+       commands sequentially as specified in the json configuration
+       file
+    """
     if SERVERS is None:
         return
 
